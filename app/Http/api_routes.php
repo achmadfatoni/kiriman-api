@@ -14,9 +14,18 @@ $api->version('v1', function ($api) {
 		return \App\User::all();
     }]);
 
-	// example of free route
-	$api->get('free', function() {
-		return \App\User::all();
+
+	$api->get('kota', function(){
+		return RajaOngkir::Kota()->all();
+	});
+
+	$api->get('cost/{origin}/{destination}', function($origin, $destination){
+		return  RajaOngkir::Cost([
+			'origin'        => $origin, // id kota asal
+			'destination'   => $destination, // id kota tujuan
+			'weight'        => 1000, // berat satuan gram
+			'courier'       => 'jne', // kode kurir pengantar ( jne / tiki / pos )
+		])->get();
 	});
 
 });
